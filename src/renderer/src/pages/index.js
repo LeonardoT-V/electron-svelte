@@ -1,0 +1,5 @@
+export { default as ProyectsPage } from './ProyectsPage.svelte'
+export { default as LiveEditorPage } from './LiveEditorPage.svelte'
+export { default as MainPanelPage } from './MainPanelPage.svelte'
+export { default as TableSqlPage } from './TableSqlPage.svelte'
+export { default as EditableTablePage } from './EditableTablePage.svelte'
