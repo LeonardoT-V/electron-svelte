@@ -4,6 +4,7 @@
   export let showModal // boolean
   let dialog // HTMLDialogElement
   $: if (dialog && showModal) dialog.showModal()
+  $: if (dialog && !showModal) dialog.close()
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -17,10 +18,6 @@
 
     <slot />
 
-    <footer class="flex w-full gap-4 justify-end  p-3">
-      <button on:click|self={()=> dialog.close()} class="text-red-400 bg-red-50 p-4">close</button>
-      <slot name="footer"/>
-    </footer>
   </section>
 </dialog>
 

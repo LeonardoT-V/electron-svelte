@@ -3,6 +3,7 @@
   import { Button } from '../primitive'
   import { DB_MONGO, DB_POSTGRE } from '../../lib/const'
   import {apiProjects} from '../../api'
+  import { fade } from 'svelte/transition'
   let projects = apiProjects.readProjectCreated()
 </script>
 
@@ -12,15 +13,9 @@
   {:then projects}
     <section class="flex gap-4 overflow-auto lg:h-36 p-3 lg:flex-col w-full">
       {#each projects as project}
-        <div class="relative hover:scale-105 transition-all flex  border border-white/10 p-2 rounded-md group hover:bg-sky-400/5 hover:border-sky-400 shrink-0">
+        <div class="hover:scale-105 transition-all flex border border-white/10 p-2 rounded-md group hover:bg-sky-400/5 hover:border-sky-400 shrink-0">
           <Button
-            class="hover:bg-rose-800/20 absolute top-2 right-2 px-1 hidden group-hover:block"
-            on:click={() => apiProjects.deleteProjectCreated(project.name, () => projects = apiProjects.readProjectCreated())}
-          >
-            <IconTrash size={20} class="stroke-rose-400" />
-          </Button>
-          <Button
-            class="flex items-center gap-4"
+            class="flex gap-4"
             on:click={apiProjects.openProjectCreated(project)}
           >
             {#if project.database === DB_MONGO}
@@ -36,7 +31,7 @@
                 <IconPostgresql size={36} className="text-white/40 group-hover:text-blue-400" />
               </aside>
             {/if}
-            <section class="flex flex-col w-full gap-1">
+            <section class="flex flex-col w-full gap-1 items-start">
               <div>
                 <h3
                   class="font-bold text-xl text-zinc-100/80 group-hover:text-sky-400 transition-colors"
@@ -49,6 +44,12 @@
                 created at: 00-00-2023
               </div>
             </section>
+          </Button>
+          <Button
+            class="hover:bg-rose-800/20 px-1 hidden group-hover:flex h-fit"
+            on:click={() => apiProjects.deleteProjectCreated(project.name, () => projects = apiProjects.readProjectCreated())}
+          >
+            <IconTrash size={20} class="stroke-rose-400" />
           </Button>
         </div>
       {/each}

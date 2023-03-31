@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import express from './expres'
+// import express from './expres'
 import {
   columnsCreatedPostgre,
   createProject,
@@ -29,7 +29,6 @@ function createWindow() {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
-
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
@@ -50,9 +49,20 @@ function createWindow() {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
-  express.listen(3000, () => {
-    console.log('express')
-  })
+  // const e = express.listen(3000, () => {
+  //   console.log('express')
+  // })
+
+  // setTimeout(() => {
+  //   e.close()
+  //   console.log('stop')
+  // }, 3000)
+
+  // setTimeout(() => {
+  //   e.listen(3000)
+  //   console.log('now')
+  // }, 6000)
+
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils

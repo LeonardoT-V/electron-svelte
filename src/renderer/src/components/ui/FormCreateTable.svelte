@@ -1,4 +1,5 @@
 <script>
+  import { fade } from 'svelte/transition'
   import { IconEdit, IconTrash } from '../../icons'
   import { Button, Container, Separator, TextField } from '../primitive'
   export let value
@@ -11,6 +12,9 @@
 </script>
 
 {#if showPanel}
+<div transition:fade>
+
+
   <Container class="flex flex-col gap-4">
     <TextField
       title="You table name"
@@ -39,6 +43,7 @@
       >
     </div>
   </Container>
+</div>
 {:else if !showPanel && value !== ''}
   <Separator left>
     <h2
@@ -46,8 +51,8 @@
     >
       Creating table <span class="text-sky-400">{value}</span>
     </h2>
-    <Button class="bg-emerald-400/5 border-emerald-400 border" on:click={() => (showPanel = true)}>
-      <h2 class="text-emerald-400 font-bold text-xl">Edit</h2>
+    <Button class="bg-green-400/5 border-green-400 border" on:click={() => (showPanel = true)}>
+      <h2 class="text-green-400 font-bold text-xl">Edit</h2>
       <IconEdit size={20} />
     </Button>
     <Button class="bg-rose-400/5 border-rose-400 border" on:click={() => (value = '')}>

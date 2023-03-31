@@ -1,12 +1,12 @@
 <script>
-  import { Button, DropZone, MonacoEditor, Separator } from '../components/primitive'
-  import Table from '../components/primitive/Table.svelte'
+  import { Button, DropZone, MonacoEditor, Separator, Table } from '../components/primitive'
   import { IconUpload } from '../icons'
   import BasicLayout from '../layouts/BasicLayout.svelte'
   import { apiEditor } from '../api'
+  import {ErrorContainer, ResultEditorOperation} from '../components/ui'
 
   let code = '-- Write you code here'
-  let table = null
+  let table = []
 </script>
 
 <BasicLayout>
@@ -35,9 +35,13 @@
     </aside>
   </section>
 
-  {#if table}
-    <footer class="px-3">
-      <Table fields={table.fields} rows={table.rows} />
-    </footer>
-  {/if}
+  <footer class="px-3">
+    {#if table.error}
+    <ErrorContainer error={table.error} />
+    {:else if (table.command === 'DELETE' || 'INSERT' || 'UPDATE') && table.rows?.length === 0 }
+      <ResultEditorOperation command={table.command} />
+    {:else}
+    <Table fields={table.fields} rows={table.rows} />
+    {/if}
+  </footer>
 </BasicLayout>

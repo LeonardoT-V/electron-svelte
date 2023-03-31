@@ -1,11 +1,14 @@
 <script>
+  import { onMount } from 'svelte'
   import { apiSql } from '../../api'
 
   import { IconPlus, IconTrash } from '../../icons'
   import { A, Button } from '../primitive'
   export let showPanel
   export let existTable
-  let tables = apiSql.readTablesCreated()
+  let tables= []
+  onMount(()=> tables = apiSql.readTablesCreated())
+
 </script>
 
 <section class="flex gap-4 overflow-auto lg:h-36 p-3 w-full">

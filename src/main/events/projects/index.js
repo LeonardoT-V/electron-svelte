@@ -1,5 +1,7 @@
 import fs from 'fs'
+import { Pool } from 'pg'
 import { createPool } from '../../database/postgre'
+import { errorCodePostgre } from '../../lib'
 
 export async function createProject(app, project) {
   const APPDATA = app.getPath('userData') + '/Projects'
@@ -8,27 +10,32 @@ export async function createProject(app, project) {
   //   return { error: { description: 'Fill all form' } }
 
   // verificar existencia de la base de datos
-  // const pool = new Pool({ connectionString: body.uri })
-  // const dataConnect = await pool.connect().catch(err => err)
-  // if (dataConnect.code) {
-  //   const errorStatus = searchCodeErrorPg(dataConnect)
-  //   return res.status(400).json({ error: errorStatus })
-  // }
+  try {
+    const pool = new Pool({ connectionString: project.uri })
+    const dataConnect = await pool.connect().catch((er) => er)
+    if (dataConnect.code) {
+      const errorStatus = errorCodePostgre(dataConnect)
+      return { error: errorStatus }
+    }
 
-  if (!fs.existsSync(`${APPDATA}`)) {
-    fs.mkdirSync(`${APPDATA}`)
+    if (!fs.existsSync(`${APPDATA}`)) {
+      fs.mkdirSync(`${APPDATA}`)
+    }
+
+    if (fs.existsSync(`${APPDATA}/${project.name}.json`)) {
+      return { error: { description: `The ${project.name} project exist` } }
+    }
+
+    fs.writeFile(`${APPDATA}/${project.name}.json`, JSON.stringify(project, null, 2), (err) => {
+      if (err) return console.log(err)
+      console.log('file create')
+    })
+
+    return project
+  } catch (error) {
+    const errorStatus = errorCodePostgre(error)
+    return JSON.stringify({ error: errorStatus })
   }
-
-  if (fs.existsSync(`${APPDATA}/${project.name}.json`)) {
-    return { error: { description: `The ${project.name} project exist` } }
-  }
-
-  fs.writeFile(`${APPDATA}/${project.name}.json`, JSON.stringify(project, null, 2), (err) => {
-    if (err) return console.log(err)
-    console.log('file create')
-  })
-
-  return project
 }
 
 export async function deleteProjects(app, name) {

@@ -4,12 +4,12 @@
   import useSessionStorage from '../../lib/useSessionStorage'
   import { APP_NAME, DB_MONGO, ROUTES_PAGES, SESSION_STORE_PROJECT, Logo } from '../../lib/const'
   import { A, Separator } from '../primitive'
-
+  export let showNavbar = true
   const { getStorage, removeStorage } = useSessionStorage(SESSION_STORE_PROJECT)
 </script>
 
 <aside
-  class="fixed top-0 left-0  w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+  class="fixed top-0 left-0 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 {showNavbar ? '': 'hidden'}"
 >
   <div class="h-full flex flex-col gap-4 p-3 overflow-y-auto bg-zinc-800/50">
     <header class="flex items-center justify-center gap-4 px-3 py-5  rounded-md ">

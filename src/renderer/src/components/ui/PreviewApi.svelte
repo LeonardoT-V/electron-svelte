@@ -3,9 +3,9 @@
   const API = {
     singular: [
       {method: 'GET', className: "bg-blue-400/5 text-blue-400"},
-      {method: 'POST', className: "bg-red-400/5 text-red-400"},
+      {method: 'POST', className: "bg-violet-400/5 text-violet-400"},
       {method: 'PUT', className: "bg-lime-400/5 text-lime-400"},
-      {method: 'DELETE', className: "bg-violet-400/5 text-violet-400"},
+      {method: 'DELETE', className: "bg-red-400/5 text-red-400"},
     ],
     plural: [
       {method: 'GET', className: "bg-blue-400/5 text-blue-400"},

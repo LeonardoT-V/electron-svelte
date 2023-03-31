@@ -3,6 +3,7 @@
   import { DB_MONGO, DB_POSTGRE, POSTGRE_STRING } from '../../lib/const'
   import { IconDatabase, IconFolder, IconLink } from '../../icons'
   import {apiProjects} from '../../api'
+  export let error
   let project = {
     database: '',
     name: '',
@@ -11,7 +12,7 @@
 
 </script>
 
-<form on:submit|preventDefault={() => apiProjects.createNewProject(project)} class="gap-4 flex flex-col">
+<form on:submit|preventDefault={() => apiProjects.createNewProject(project, (er)=> error= er)} class="gap-4 flex flex-col">
     <Separator>
       <h2
         class="text-transparent bg-clip-text font-bold text-3xl bg-gradient-to-r from-sky-600 to-sky-300"
@@ -19,8 +20,6 @@
         Create a new <span class="text-white font-bold">Project</span>
       </h2>
     </Separator>
-
-
 
   <SelectionField
     name="database"

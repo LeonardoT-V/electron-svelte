@@ -1,9 +1,10 @@
 <script>
   import { Container } from '../components/primitive'
   import Logo from '../assets/icons.svg'
-  import { FormCreateProject, ListsProjects } from '../components/ui'
+  import { FormCreateProject, ListsProjects, ErrorContainer } from '../components/ui'
   import CenterLayout from '../layouts/CenterLayout.svelte'
   import { APP_NAME } from '../lib/const'
+  let error = undefined
 </script>
 
 <CenterLayout >
@@ -13,8 +14,7 @@
   </Container>
 
   <Container class="gap-8 flex flex-col m-auto ml-0 justify-between lg:w-1/2 w-full">
-    <FormCreateProject />
-
+    <FormCreateProject bind:error />
     <header class="flex gap-4 justify-center bg-sky-400/5 p-3 rounded">
       <div class="flex gap-2 align-middle items-center ">
         <img src={Logo} alt="logo" height={32} width={32} />
@@ -29,5 +29,9 @@
         </ul>
       </div>
     </header>
+
+    {#if error}
+      <ErrorContainer {error} />
+    {/if}
   </Container>
 </CenterLayout>
